@@ -66,7 +66,7 @@ if (route.query.path) {
 onMounted(() => {
   if (slug && slug[0] !== undefined && slug[0] === 'site-config') {
     useStoryblokBridge(story.value.id, (evStory) => (story.value = evStory), {
-      disableClicks: true,
+      preventClicks: true,
     })
   }
 })
@@ -120,23 +120,11 @@ onMounted(() => {
       </div>
     </div>
     <slot />
+
     <Footer
-      :text_color="story.content.footer_text_color"
-      :background_color="story.content.footer_background_color"
-      :logo="story.content.footer_logo"
-      :about="story.content.footer_about"
-      :navs="{
-        nav_1_headline: story.content.footer_nav_1_headline,
-        nav_2_headline: story.content.footer_nav_2_headline,
-        nav_3_headline: story.content.footer_nav_3_headline,
-        nav_1: story.content.footer_nav_1,
-        nav_2: story.content.footer_nav_2,
-        nav_3: story.content.footer_nav_3,
-      }"
-      :twitter="story.content.twitter"
-      :instagram="story.content.instagram"
-      :youtube="story.content.youtube"
-      :facebook="story.content.facebook"
+      :headline="story.content.footer_headline"
+      :contacts="story.content.footer_contacts"
+      :nav="story.content.header_nav"
     />
   </main>
 </template>
