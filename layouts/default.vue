@@ -58,7 +58,11 @@ if (route.query.path) {
   slug = route.query.path?.split('/')
 } else {
   // fallback if no path parameter found (e.g. in template space)
-  slug = route.params.slug.slice()
+  console.log(route.params)
+  if (route.params.slug) {
+    slug = route.params.slug.slice()
+  }
+
 }
 // In your project you would typically want to do the following:
 // const slug = route.params.slug
@@ -80,7 +84,7 @@ onMounted(() => {
       :auto_nav="story.content.header_auto_nav"
       :nav="story.content.header_nav"
       :buttons="story.content.header_buttons"
-      :light="story.content.header_light"
+      :light="false"
     />
     <div
       v-if="
@@ -125,6 +129,7 @@ onMounted(() => {
       :headline="story.content.footer_headline"
       :contacts="story.content.footer_contacts"
       :nav="story.content.header_nav"
+      :light="false"
     />
   </main>
 </template>
