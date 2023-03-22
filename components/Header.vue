@@ -21,14 +21,25 @@ const { data } = await storyblokApi.get('cdn/stories', {
 })
 folderStories.value = !props.auto_nav_folder
   ? data.stories.filter(
-      (story) => story.parent_id === 0 || story.parent_id === null
-    )
+    (story) => story.parent_id === 0 || story.parent_id === null
+  )
   : data.stories
 
 const mobileNavOpen = ref(false)
 
+
 const toggleMobileNav = () => {
   mobileNavOpen.value = !mobileNavOpen.value
+}
+
+const cartOpen = ref(false)
+let cart = ref({});
+const toggleCart = async () => {
+  cartOpen.value = !cartOpen.value
+  if (cartOpen.value) {
+    cart.value = await getCart()
+
+  }
 }
 
 const route = useRoute()
@@ -61,64 +72,60 @@ onMounted(() => {
 </script>
 
 <template>
-  <header
-    class="fixed z-[99] top-0 left-0 w-full transition-all duration-700"
-    :class="[headerClasses, headerBg, headerTransparency]"
-  >
-    <div
-      class="max-w-[1536px] mx-auto w-full px-4 lg:px-8 h-full flex items-center justify-between lg:justify-start"
-    >
+  <header class="fixed z-[99] top-0 left-0 w-full transition-all duration-700"
+    :class="[headerClasses, headerBg, headerTransparency]">
+    <div class="max-w-[1536px] mx-auto w-full px-4 lg:px-8 h-full flex items-center justify-between lg:justify-start">
       <NuxtLink to="/" class="flex shrink-0">
-        <img
-          :src="logo.filename"
-          :alt="logo.alt"
+        <img :src="logo.filename" :alt="logo.alt"
           class="max-w-[180px] xl:max-w-[250px] max-h-[80px] object-contain transition-transform origin-left duration-700 pointer-events-none"
-          :class="logoScale"
-        />
+          :class="logoScale" />
       </NuxtLink>
       <nav class="main-nav mx-auto invisible hidden lg:visible lg:block">
         <ul v-if="!auto_nav">
           <li v-for="item in nav" :key="item._uid">
-            <NavItem
-              class="hover:text-primary"
-              :class="light ? 'text-primary' : 'text-white'"
-              :item="item"
-            />
+            <NavItem class="hover:text-primary" :class="light ? 'text-primary' : 'text-white'" :item="item" />
           </li>
         </ul>
         <ul v-else>
           <li v-for="story in folderStories" :key="story.uuid">
-            <NuxtLink
-              :to="story.full_slug"
-              class="transition-colors cursor-pointer hover:text-primary"
-              :class="light ? 'text-primary' : 'text-white'"
-            >
+            <NuxtLink :to="story.full_slug" class="transition-colors cursor-pointer hover:text-primary"
+              :class="light ? 'text-primary' : 'text-white'">
               {{ story.name }}
             </NuxtLink>
           </li>
         </ul>
       </nav>
-      <nav
-        class="invisible ml-auto lg:ml-0 hidden md:visible md:block md:mr-8 lg:mr-0"
-      >
+      <nav class="invisible ml-auto lg:ml-0 hidden md:visible md:block md:mr-8 lg:mr-0">
         <ul class="flex space-x-4 xl:space-x-8 items-center">
           <li v-for="button in buttons" :key="button._uid">
             <Button :button="button" />
           </li>
+          <li>
+            <button>
+              <a href="#" @click="toggleCart">
+                My Cart
+              </a>
+            </button>
+          </li>
         </ul>
       </nav>
-      <MobileNavToggle
-        @click="toggleMobileNav"
-        :color="light ? 'bg-dark' : 'bg-light'"
-      />
+      <MobileNavToggle @click="toggleMobileNav" :color="light ? 'bg-dark' : 'bg-light'" />
+
+    </div>
+    <div v-show="cartOpen">
+
+      <ul class="flex space-x-4 xl:space-x-8 items-center">
+
+        <li v-for="item in cart.items" :key="item.id">
+          {{ item.quantity }}
+          {{ item.price_total }}
+          {{ item.product.name }}
+        </li>
+      </ul>
+
     </div>
   </header>
-  <MobileNav
-    :mobileNavOpen="mobileNavOpen"
-    :headerNav="nav"
-    :autoNav="auto_nav"
-    :folderStories="folderStories"
-  />
+  <MobileNav :mobileNavOpen="mobileNavOpen" :headerNav="nav" :autoNav="auto_nav" :folderStories="folderStories" />
   <pre></pre>
 </template>
 
