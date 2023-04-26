@@ -17,6 +17,7 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
 
   ],
+
   ssr: false,
   css: ['@/assets/css/fonts.css'],
 
@@ -33,4 +34,7 @@ export default defineNuxtConfig({
       swellStoreName: process.env.SWELL_STORE_NAME,
       swellAccessToken: process.env.SWELL_ACCESS_TOKEN
   },
+  vite: {
+    optimizeDeps: { exclude: ["fsevents"] }
+  }
 })
