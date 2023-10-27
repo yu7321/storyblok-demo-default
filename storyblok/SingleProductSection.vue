@@ -1,5 +1,4 @@
 <script setup>
-// TODO: change to bigcommerce
 import Client from 'shopify-buy'
 const config = useRuntimeConfig()
 const props = defineProps({ blok: Object })
