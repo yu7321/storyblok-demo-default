@@ -22,6 +22,8 @@ export default defineNuxtConfig({
       customParent: process.env.STORYBLOK_CUSTOM_PARENT,
       shopifyDomain: process.env.SHOPIFY_DOMAIN,
       shopifyToken: process.env.SHOPIFY_TOKEN,
+      bigCommerceUrl: process.env.BIGCOMMERCE_STOREURL,
+      bigCommerceToken: process.env.BIGCOMMERCE_TOKEN,
     },
   },
   vite: {
