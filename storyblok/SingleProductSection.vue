@@ -9,6 +9,7 @@ const shopifyClient = Client.buildClient({
 })
 
 const productId = computed(() => props.blok?.product?.items[0]?.id)
+
 const product = ref(null)
 const pending = ref(true)
 
@@ -22,6 +23,7 @@ const fetchProduct = async (id) => {
     productObject.price = fetchedProduct.variants[0].price.amount
     productObject.avaiable = fetchedProduct.variants[0].available
   })
+
   return productObject
 }
 
