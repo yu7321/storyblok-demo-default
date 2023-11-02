@@ -3,9 +3,14 @@ defineProps({ blok: Object })
 
 let { slug } = useRoute().params
 let language = 'default'
+let country = ''
 
 if (slug) language = await getLanguage(slug)
 
+const myslug = await getSlug()
+if (myslug) country = myslug[0] + '/'
+console.log('COUNTRY:', country)
+console.log('SLUG:', myslug)
 const searchTerm = ref('')
 const checkedCategories = ref([])
 const checkedAuthor = ref('')
@@ -58,7 +63,7 @@ const fetchArticles = async () => {
   articles.value = null
   const { data } = await storyblokApi.get('cdn/stories/', {
     version: 'draft',
-    starts_with: 'articles',
+    starts_with: country + 'services',
     language: language,
     fallback_lang: 'default',
     search_term: searchTerm.value,
