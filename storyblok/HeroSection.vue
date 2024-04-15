@@ -10,7 +10,7 @@ const height = computed(() => {
 })
 
 const textColor = computed(() => {
-  return props.blok.text_color === 'light' ? 'text-white' : 'text-dark'
+  return props.blok.text_color === 'light' ? 'text-white' : 'text-primary'
 })
 
 const horizontalAlignment = computed(() => {
