@@ -4,7 +4,7 @@ const props = defineProps({ blok: Object })
 
 <template>
   <section v-editable="blok" class="">
-    <div class="wd-full container text-center">
+    <div class="wd-full container text-left">
       <Headline v-if="blok.headline" class="mb-4">{{ blok.headline }}</Headline>
       <Lead v-if="blok.lead">
         {{ blok.lead }}
