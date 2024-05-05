@@ -21,11 +21,9 @@ const verticalAlignment = computed(() => {
   return 'items-' + props.blok.vertical_alignment
 })
 
-const optimizedImage = computed(() => {
-  const image = getOptimizedImage(props.blok.background_image, 2000)
-  console.log('Optimized Image URL: ', image) // Add this line to log the image URL
-  return image
-})
+const optimizedImage = computed(() =>
+  getOptimizedImage(props.blok.background_image, 2000),
+)
 
 const showVideo = computed(() => {
   if (
@@ -87,7 +85,7 @@ const showVideo = computed(() => {
       muted
       loop
     ></video>
-    <nuxt-image
+    <img
       v-if="!showVideo && blok.background_image.filename"
       :src="optimizedImage"
       :alt="blok.background_image.alt"
